@@ -27,10 +27,39 @@ public:
 
 };
 
-SinglyLinkedList::SinglyLinkedList(/* args */)
+
+int SinglyLinkedList::getCount(){return _count;}
+LinkNode* SinglyLinkedList::getStart(){return _start;}
+LinkNode* SinglyLinkedList::getEnd(){return _end;}
+
+void SinglyLinkedList::addCurrency(Currency* newItem){ //TODO
+    
+}
+void SinglyLinkedList::removeCurrency(){ //TODO
+
+}
+int SinglyLinkedList::findCurrency(Currency* searchItem){ //TODO
+   
+}
+
+LinkNode* SinglyLinkedList::getCurrency(int index){ //TODO
+
+}
+void SinglyLinkedList::printList(){ //TODO
+
+}
+bool SinglyLinkedList::isListEmpty(){ //TODO
+
+}
+int SinglyLinkedList::countCurrency(){ //TODO
+
+} 
+
+
+SinglyLinkedList::SinglyLinkedList(/* args */) //TODO
 {
 }
 
-SinglyLinkedList::~SinglyLinkedList()
+SinglyLinkedList::~SinglyLinkedList() //TODO
 {
 }

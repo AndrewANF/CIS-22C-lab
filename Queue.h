@@ -22,3 +22,26 @@ Queue::Queue()
 Queue::~Queue()
 {
 }
+
+
+
+void Queue::enqueue(Currency* newItem){ //TODO
+
+}
+
+Currency* Queue::dequeue(){ //TODO
+
+}
+
+Currency* Queue::peekFront(){ //TODO
+
+}
+
+Currency* Queue::peekRear(){ //TODO
+
+}
+
+void Queue::printQueue(){ //TODO
+
+}
+
