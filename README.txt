@@ -35,24 +35,24 @@
     3. Stack Class (Derived from SinglyLinkedList):
         - No additional attributes
         - Implement usual stack methods:
-            - Constructor and createStack method (optional)
+            - Constructor and createStack method (optional) //AND???
             - push method
             - pop method
             - peek method
             - printStack method
-            - Destructor and/or destroyStack method (optional)
-        - Ensure Stack objects do not allow Linked List functions to be used on them
+            - Destructor and/or destroyStack method (optional) ??
+        - Ensure Stack objects do not allow Linked List functions to be used on them // Make protected???
           
     4. Queue Class (Derived from SinglyLinkedList):
         - No additional attributes
         - Implement usual queue methods:
-            - Constructor and createQueue method (optional)
+            - Constructor and createQueue method (optional) ??
             - enqueue method
             - dequeue method
             - peekFront method
             - peekRear method
             - printQueue method
-            - Destructor and/or destroyQueue method (optional)
+            - Destructor and/or destroyQueue method (optional) ??
         - Ensure Queue objects do not allow Linked List functions to be used on them
           
     5. General Guidelines:
