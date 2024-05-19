@@ -17,7 +17,7 @@ public:
 
 Queue::Queue()
 {
-    SinglyLinkedList();
+    SinglyLinkedList;
 }
 
 void Queue::enqueue(Currency& newItem) { //TODO

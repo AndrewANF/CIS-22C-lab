@@ -15,7 +15,7 @@ public:
 //  RETURN: n/a
 //  INTENT: 
 Stack::Stack() {
-    SinglyLinkedList();
+    SinglyLinkedList;
 }
 
 //     PRE: n/a
