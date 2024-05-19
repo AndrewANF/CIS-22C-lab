@@ -5,31 +5,22 @@ class Queue : public SinglyLinkedList
 {
 public:
     Queue();
-    ~Queue();
 
-    void enqueue(Currency* newItem);
+    void enqueue(Currency& newItem);
     Currency* dequeue();
     Currency* peekFront();
     Currency* peekRear();
-    void printQueue();
+    std::ostringstream printQueue();
 
 
 };
 
 Queue::Queue()
 {
-    SinglyLinkedList();
 }
 
-Queue::~Queue()
-{
-    ~SinglyLinkedList();
-}
-
-
-
-void Queue::enqueue(Currency* newItem) { //TODO
-    int endex = count == 0 ? 0 : count - 1;
+void Queue::enqueue(Currency& newItem) { //TODO
+    int endex = countCurrency() == 0 ? 0 : countCurrency() - 1;
     addCurrency(newItem, endex);
 }
 
@@ -40,13 +31,14 @@ Currency* Queue::dequeue() { //TODO
 }
 
 Currency* Queue::peekFront() { //TODO
-    
+    return getCurrency(0);
 }
 
 Currency* Queue::peekRear() { //TODO
-
+    int endex = countCurrency() == 0 ? 0 : countCurrency() - 1;
+    return getCurrency(endex);
 }
 
-void Queue::printQueue() { //TODO
-
+std::ostringstream Queue::printQueue() { //TODO
+    return SinglyLinkedList::printList();
 }
