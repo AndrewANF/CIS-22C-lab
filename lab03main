@@ -28,5 +28,12 @@ int main()
 
 	SinglyLinkedList list;
 
+	for (int i = 0; i < SIZE; i++) {
+		list.addCurrency(*currencies.at(i), i);
+	}
+
+	string print = list.printList().str();
+	cout << "After add operation:" << endl << print << endl << endl;
+
 	return 0;
 }
