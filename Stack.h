@@ -1,36 +1,62 @@
 #include "SinglyLinkedList.h"
 
-class Stack : public SinglyLinkedList{
-
+class Stack : public SinglyLinkedList {
 public:
-
     Stack();
     ~Stack();
 
-    void push(Currency* newItem);
+    void push(const Currency& newItem);
     Currency* pop();
     Currency* peek();
-    void printStack();
-
+    std::ostringstream printStack();
 };
 
-
-
-Stack::Stack(){}
-Stack::~Stack(){}
-
-void Stack::push(Currency* newItem){  //TODO
-
+//     PRE: n/a
+//    POST: n/a
+//  RETURN: n/a
+//  INTENT: 
+Stack::Stack() {
+    SinglyLinkedList();
 }
 
-Currency* Stack::pop(){ //TODO
-
+//     PRE: n/a
+//    POST: n/a
+//  RETURN: n/a
+//  INTENT: 
+Stack::~Stack() {
+    ~SinglyLinkedList();
 }
 
-Currency* Stack::peek(){ //TODO
-
+//     PRE: n/a
+//    POST: n/a
+//  RETURN: n/a
+//  INTENT: 
+void Stack::push(const Currency& newItem) {  //TODO
+    addCurrency(newItem, 0);
 }
 
-void Stack::printStack(){ //TODO
+//     PRE: n/a
+//    POST: n/a
+//  RETURN: n/a
+//  INTENT: 
+Currency* Stack::pop() { //TODO
+    Currency* target = getCurrency(0);
+    removeCurrency(0);
+    return target;
+}
 
+//     PRE: n/a
+//    POST: n/a
+//  RETURN: n/a
+//  INTENT: 
+Currency* Stack::peek() {
+    return getCurrency(0);
+}
+
+//     PRE: n/a
+//    POST: n/a
+//  RETURN: n/a
+//  INTENT: 
+std::ostringstream Stack::printStack() { //TODO
+    return printList();
 }
