@@ -1,3 +1,8 @@
+//***************************************************************************************
+//***************************************************************************************
+
+//***************************************************************************************
+//***************************************************************************************
 class SinglyLinkedList {
 private:
 	int _count;
@@ -114,6 +119,7 @@ Currency* SinglyLinkedList::removeCurrency(int index) { //TODO
 	LinkNode* curNode = _start->_next; // Skip "dummy" node
 	LinkNode* prevNode = _start;
 	for (int i = 0; i < index; i++) {
+		prevNode = curNode;
 		curNode = curNode->_next;
 	}
 	prevNode->_next = curNode->_next;
@@ -145,7 +151,7 @@ std::ostringstream SinglyLinkedList::printList() const {
 		output << target->wholePart() << "." << std::setfill('0') << std::setw(2)
 			   << target->fractPart() << ' ' << target->name() << '\t';
 		// EX: 57.12 dollar    23.44 dollar    87.43 dollar    68.99 dollar    ...
-		// TO-DO: pluralize Currency name where applicable
+		// ⚠️ TO-DO: (maybe) pluralize Currency name where applicable
 	}
 	return output;
 }
