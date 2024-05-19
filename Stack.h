@@ -3,9 +3,8 @@
 class Stack : public SinglyLinkedList {
 public:
     Stack();
-    ~Stack();
 
-    void push(const Currency& newItem);
+    void push(Currency& newItem);
     Currency* pop();
     Currency* peek();
     std::ostringstream printStack();
@@ -23,15 +22,13 @@ Stack::Stack() {
 //    POST: n/a
 //  RETURN: n/a
 //  INTENT: 
-Stack::~Stack() {
-    ~SinglyLinkedList();
-}
+
 
 //     PRE: n/a
 //    POST: n/a
 //  RETURN: n/a
 //  INTENT: 
-void Stack::push(const Currency& newItem) {  //TODO
+void Stack::push(Currency& newItem) {  //TODO
     addCurrency(newItem, 0);
 }
 
