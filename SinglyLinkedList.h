@@ -54,10 +54,10 @@ SinglyLinkedList::SinglyLinkedList() {
 //  RETURN: n/a
 //  INTENT: Destructor. Loops to call each node's destructor.
 SinglyLinkedList::~SinglyLinkedList() {
-	LinkNode* node = _start;
-	while (node) {
-		delete node;
-	}
+//	LinkNode* node = _start;
+//	while (node) {
+//		delete node;
+//	}
 }
 
 //     PRE: newItem - reference to a Currency obj
