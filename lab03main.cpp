@@ -5,6 +5,8 @@
 #include "Dollar.h"
 #include "SinglyLinkedList.h"
 #include "LinkNode.h"
+#include "Stack.h"
+#include "Queue.h"
 
 const int SIZE = 20;
 const double TEST_VALS[SIZE] = {
@@ -55,7 +57,7 @@ int main()
 	list.removeCurrency(2);
 	cout << list.printList().str() << endl;
 
-	// Add 4 objects
+	// Add 4 objects, from 9-12
 	for (int i = 9; i <= 12; i++) {
 		list.addCurrency(*currencies[i], i % 5);
 	}
@@ -64,6 +66,15 @@ int main()
 	list.removeCurrency(list.countCurrency() % 6);
 	list.removeCurrency(list.countCurrency() / 7);
 	cout << list.printList().str() << endl;
+
+	Stack stack;
+
+	// Add 7 objects from 13-20
+	for (int i = 7; i <= 20; i++) {
+		stack.push(*currencies[i]);
+	}
+
+	cout << "Peeking stack: ";
 
 	return 0;
 }
