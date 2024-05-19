@@ -1,8 +1,7 @@
-//***************************************************************************************
-//***************************************************************************************
+#pragma once
+#include <iostream>
+#include "LinkNode.h"
 
-//***************************************************************************************
-//***************************************************************************************
 class SinglyLinkedList {
 private:
 	int _count;
@@ -75,6 +74,7 @@ void SinglyLinkedList::addCurrency(Currency& newItem, int index) {
 	// creating newNode with address of newItem, whose _next points to the next list-node
 	LinkNode* newNode = new LinkNode(&newItem, curNode->_next);
 	curNode->_next = newNode;
+	if (index == _count-1) { _end = newNode; }
 	_count++;
 }
 
@@ -123,8 +123,9 @@ Currency* SinglyLinkedList::removeCurrency(int index) { //TODO
 		curNode = curNode->_next;
 	}
 	prevNode->_next = curNode->_next;
+	if (index == _count - 1) { _end = prevNode; }
 	_count--;
-	return nullptr;
+	return curNode->_data;
 	// ⚠️ TO-DO: Return copy of object and delete its host list-node
 }
 
@@ -149,7 +150,7 @@ std::ostringstream SinglyLinkedList::printList() const {
 	for (int i = 0; i < _count; i++) {
 		Currency* target = getCurrency(i);
 		output << target->wholePart() << "." << std::setfill('0') << std::setw(2)
-			   << target->fractPart() << ' ' << target->name() << '\t';
+			<< target->fractPart() << ' ' << target->name() << '\t';
 		// EX: 57.12 dollar    23.44 dollar    87.43 dollar    68.99 dollar    ...
 		// ⚠️ TO-DO: (maybe) pluralize Currency name where applicable
 	}
