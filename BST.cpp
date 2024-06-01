@@ -123,7 +123,6 @@ void BST::empty() {
 	_root = nullptr;
 }
 
-// Deletes all data present in nodes, but does not delete existing nodes
 void BST::empty(BSTNode* node) {
 	if (node != nullptr) {
 		empty(node->left());
