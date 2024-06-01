@@ -1,20 +1,29 @@
-#include "BST.h"
+// Lab 4 - 1 June 2024
+// BST.cpp
+// Linhnam Le & Andrew Forsberg
+// This assignment demonstrates binary search trees
 
-BST::~BST() {
-	std::cout << "Destructor called" << std::endl;
-}
+#include "BST.h"
+#include <queue>
+#include <fstream>
 
 void BST::breadth() const {
 	if (isEmpty()) {
 		std::cout << "breadth called but list empty" << std::endl;
 		return;
 	}
-	breadth(_root);
-}
 
-void BST::breadth(BSTNode* node) const {
-	if (node) {
-		// something with vectors
+	std::queue<BSTNode*> q;
+	q.push(_root);
+
+	while (!q.empty()) {
+		BSTNode* currentNode = q.front();
+		q.pop();
+
+		currentNode->data()->print();
+
+		if (currentNode->left()) q.push(currentNode->left());
+		if (currentNode->right()) q.push(currentNode->right());
 	}
 }
 
@@ -26,7 +35,7 @@ void BST::inOrder() const {
 	inOrder(_root);
 }
 
-void BST::inOrder(BSTNode *node) const {
+void BST::inOrder(BSTNode* node) const {
 	if (node) {
 		inOrder(node->left());
 		node->data()->print();
@@ -43,7 +52,7 @@ void BST::preOrder() const {
 	preOrder(_root);
 }
 
-void BST::preOrder(BSTNode *node) const {
+void BST::preOrder(BSTNode* node) const {
 	if (node) {
 		node->data()->print();
 		preOrder(node->left());
@@ -83,7 +92,7 @@ BSTNode* BST::search(BSTNode* node, Currency* target) const {
 			return search(node->right(), target);
 		}
 	}
-	return nullptr;
+	return nullptr; // returns null if node not found
 }
 
 // Iterative insert method
@@ -98,23 +107,56 @@ BSTNode* BST::insert(BSTNode* node, Currency* target) {
 	if (node->data()->isGreater(*target)) {
 		node->setLeft(insert(node->left(), target));
 	}
-	else if (!(node->data()->isGreater(*target))) {
+	else if (!node->data()->isGreater(*target)) {
 		node->setRight(insert(node->right(), target));
 	}
 	return node;
 }
 
+// User-facing method, calls recursive remove
 void BST::remove(Currency* target) {
 	remove(_root, target);
 }
 
+// TODO: this method can be rewritten to call search()
+// and operate on the node it finds
+
 BSTNode* BST::remove(BSTNode* node, Currency* target) {
 	if (node == nullptr) {
-		return nullptr;
+		return nullptr; // do nothing on empty tree
 	}
 
+	if (node->data()->isGreater(*target)) {
+		node->setLeft(remove(node->left(), target));
+	}
+	else if (!node->data()->isGreater(*target)) {
+		node->setRight(remove(node->right(), target));
+	}
+	else {
+		if (node->left() == nullptr) {
+			BSTNode* temp = node->right();
+			delete node;
+			return temp;
+		}
+		else if (node->right() == nullptr) {
+			BSTNode* temp = node->right();
+			delete node;
+			return temp;
+		}
 
+		// Go right, then travel down left-child to find next node
+		BSTNode* successor = node->right();
+		while (successor && successor->left() != nullptr) {
+			successor = successor->left();
+		}
 
+		// Clone successor's data to current node
+		node->setData(successor->data());
+
+		// Remove the successor node that we just cloned
+		node->setRight(remove(node->right(), successor->data()));
+	}
+	return node;
 }
 
 void BST::empty() {
@@ -147,4 +189,8 @@ int BST::count(BSTNode* node) const {
 
 void BST::print() const {
 
+}
+
+void BST::logger(Currency* target) const {
+	
 }
