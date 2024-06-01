@@ -17,27 +17,39 @@ const double TEST_VALS[SIZE] = {
 
 int main()
 {
-	std::cout << "Hello World!\n";
+	// Data seeding
+
 	BST* tree = new BST();
 	tree->inOrder();
 
 	vector<Currency*> currencies;
-	//for (int i = 0; i < SIZE; i++) {
-	//	currencies.push_back(new Dollar(TEST_VALS[i]));
-	//}
+	for (int i = 0; i < SIZE; i++) {
+		currencies.push_back(new Dollar(TEST_VALS[i]));
+	}
 
-	//for (int i = 0; i < SIZE; i++) {
-	//	tree->insert(currencies.at(i));
-	//}
+	for (int i = 0; i < SIZE; i++) {
+		tree->insert(currencies.at(i));
+	}
+
+	/*********************************************/
+
+	// Four traversal methods. TODO: write to output log
+
+	cout << "\nBreadth follows:" << endl;
+	tree->breadth();
+
+	cout << "\ninOrder follows:" << endl;
 	tree->inOrder();
 
-	cout << "Count: " << tree->count() << endl;
+	cout << "\npreOrder follows:" << endl;
+	tree->preOrder();
 
-	tree->empty();
+	cout << "\npostOrder follows:" << endl;
+	tree->postOrder();
 
-	cout << "isEmpty: " << tree->isEmpty() << endl;
+	/*********************************************/
 
-	cout << "loading things" << endl;
+
 
 	return 0;
 }
