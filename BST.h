@@ -3,32 +3,40 @@
 // Linhnam Le & Andrew Forsberg
 // This assignment demonstrates binary search trees
 
-#pragma once
-
-// Binary search tree implementation
-// This code is designed for Dollar objects
-
 class BST {
 public:
-	BST() {
-		_root = nullptr;
-	}
+	BST() : _root(nullptr) {};
 	~BST();
 
-	// four traversal methods
-	void breadthFirst();
-	void inOrder();
-	void preOrder();
-	void postOrder();
+	// Traversal methods: in this design, the user will call these methods
+	// with no arguments. These methods below will call the private over-
+	// load methods because the recursive implementation passes the "next"
+	// node on which to operate; this keeps the public-facing interface clean.
+	void breadth() const;
+	void inOrder() const;
+	void preOrder() const;
+	void postOrder() const;
 
-	BSTNode* search(double target);	// Search for node w/ matching value
-	BSTNode* insert(double target); // Insert a node of this value
-	BSTNode* remove(double target); // Remove node w/ matching value
-	void empty();					// Empty da whole thang
-	bool isEmpty() const;			// Check if tree is empty
-	int count() const;				// Count nodes in tree
-	void print() const;				// Print
+	void remove(Currency *target);	// Remove node w/ matching value
+	BSTNode* search(Currency *target) const;	// Search for node w/ matching value
+	void empty();						// Empty da whole thang
+	int count() const;					// Count nodes in tree
+	void insert(Currency *target);		// Insert a node of this value
+	bool isEmpty() const;				// Check if tree is empty
+	void print() const;					// Print
 
 private:
+	// Following internal methods are recursive:
+	void breadth(BSTNode *node) const;
+	void inOrder(BSTNode *node) const;
+	void preOrder(BSTNode *node) const;
+	void postOrder(BSTNode *node) const;
+
+	BSTNode* remove(BSTNode* node, Currency* target);
+	BSTNode* search(BSTNode *node, Currency* target) const;
+	void empty(BSTNode *node);
+	int count(BSTNode *node) const;
+	BSTNode* insert(BSTNode* node, Currency* target);
+
 	BSTNode* _root;
 };
