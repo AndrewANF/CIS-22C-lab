@@ -27,7 +27,7 @@ public:
     void setFractPart(const int &part) { _fractPart = part; }
 
     // internal methods follow
-    double round100th(const double& amt) const;
+    double round100th(const double& amt) const; 
     void add(const Currency &other);
     void subtract(const Currency &other); // result should be logical: no negatives
     bool isEqual(const Currency &other) const;
@@ -41,9 +41,9 @@ private:
 };
 
 // Constructors below
-Currency::Currency() : _wholePart(0) , _fractPart(0) {} //SHOULD THIS BE SET TO ZERO??
+inline Currency::Currency() : _wholePart(0) , _fractPart(0) {} //SHOULD THIS BE SET TO ZERO??
 
-Currency::Currency(double &amount) {
+inline Currency::Currency(double &amount) {
     if (amount < 0) { amount *= -1; } // discards negative sign if necessary
 
     _wholePart = static_cast<int>(amount);
@@ -51,18 +51,18 @@ Currency::Currency(double &amount) {
 }
 
 // Destructor
-Currency::~Currency(){
+inline Currency::~Currency(){
     // nothing to delete at the moment
 }
 
 // Copy constructor
-Currency::Currency(const Currency &other) {
+inline Currency::Currency(const Currency &other) {
     _wholePart = other.wholePart();
     _fractPart = other.fractPart();
 }
 
 // Copy assignment
-Currency &Currency::operator=(const Currency &rhs) {
+inline Currency &Currency::operator=(const Currency &rhs) {
     // if (this == &rhs) return *this; // bail on self-assignment. TODO: test for exception
     _wholePart = rhs.wholePart();
     _fractPart = rhs.fractPart();
@@ -77,7 +77,7 @@ Currency &Currency::operator=(const Currency &rhs) {
           e.g. 2.49999999998 -> 2.5
   Return: rounded double
 */
-double Currency::round100th(const double& amt) const {
+inline double Currency::round100th(const double& amt) const {
     return (floor(amt*100+0.5)/100);
 }
 
@@ -88,7 +88,7 @@ double Currency::round100th(const double& amt) const {
           add whole parts together
   Return: void
 */
-void Currency::add(const Currency &other) {
+inline void Currency::add(const Currency &other) {
     if (!typeCheck(other)) {
         throw std::invalid_argument("Invalid addition");
     }
@@ -108,7 +108,7 @@ void Currency::add(const Currency &other) {
           subtract fractional parts while wrapping around 0-100 range
   Return: void
 */
-void Currency::subtract(const Currency& other) {
+inline void Currency::subtract(const Currency& other) {
     
     if (!typeCheck(other) || !this->isGreater(other)) {
         throw std::invalid_argument("Invalid subtraction ");
@@ -126,7 +126,7 @@ void Currency::subtract(const Currency& other) {
           Return true if both above statements evaluate to true
   Return: true or false
 */
-bool Currency::isEqual(const Currency& other) const {
+inline bool Currency::isEqual(const Currency& other) const {
     if (!typeCheck(other)) {
         throw std::invalid_argument("Invalid equality");
     }
@@ -144,7 +144,7 @@ bool Currency::isEqual(const Currency& other) const {
           compare cents value, then return result
   Return: true or false
 */
-bool Currency::isGreater(const Currency& other) const {
+inline bool Currency::isGreater(const Currency& other) const {
     if (!typeCheck(other)) {
         throw std::invalid_argument("Invalid comparison");
     }
@@ -164,11 +164,11 @@ bool Currency::isGreater(const Currency& other) const {
     Post: 
   Return: true or false
 */
-bool Currency::typeCheck(const Currency &other) const {
+inline bool Currency::typeCheck(const Currency &other) const {
     return this->name() == other.name();
 }
 
-void Currency::print() const {
+inline void Currency::print() const {
         std::cout << _wholePart << "." <<
             std::setfill('0') << std::setw(2) << _fractPart <<
             ' ' << name() << std::endl;

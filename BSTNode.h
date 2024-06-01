@@ -5,7 +5,7 @@
 
 
 // Binary search tree implementation
-
+#include "Currency.h"
 
 class BSTNode {
 public:

@@ -1,7 +1,7 @@
-// Lab 4 - 1 June 2024
+
 // lab4.cpp
 // Linhnam Le & Andrew Forsberg
-// This assignment demonstrates binary search trees
+// This assignment demonstrates binary search treeus
 
 #include <iostream>
 #include <vector>

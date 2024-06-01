@@ -1,39 +1,95 @@
 #include "BST.h"
+#include <queue>
 
+//Destructor TODO
 BST::~BST() {
 	std::cout << "Destructor called" << std::endl;
 }
 
-void BST::breadth() const {
-	if (isEmpty()) {
-		std::cout << "breadth called but list empty" << std::endl;
-		return;
-	}
-	breadth(_root);
+
+//this saves and prints the node that is given to a file 
+void printValue(BSTNode* node) { //TODO 
+
+	node->data()->print();
+	std::cout << " TESTING saveing to file DELETE ME WHEN DONE" << std::endl; //DELETE TESTING ONLY
+
 }
 
-void BST::breadth(BSTNode* node) const {
-	if (node) {
-		// something with vectors
-	}
+
+//BFS or lever order traversal will use a queue to traverse though the tree
+//It will print out each element and save to a file.
+//breadth()
+/* 
+ if (root = nullptr): 
+   return
+
+  create queue = q   
+  q.enque root 
+
+  while q.isEmpty == false
+    
+    //prints current node
+    new node = q.front
+    print node
+    save node to file
+    q.pop()
+
+    //enques next node
+    if node.left != nullptr
+      q.enque(node.left)
+
+    if node.right != nullptr
+      q.enque(node.right)
+  endloop 
+ */
+void BST::breadth() const { //TODO
+
+if (_root == nullptr) {
+  return;
+}
+  std::queue<BSTNode*> q;
+  q.push(this->_root);
+
+  while (q.empty() == false) {
+    
+    BSTNode* node = q.front();
+    
+    printValue(node);
+    
+    q.pop();
+
+    if (node->left() != nullptr) {
+      q.push(node->left());
+    }
+    if (node->right() != nullptr) {
+      q.push(node->right());
+    }
+  }
+
+
+
 }
 
-void BST::inOrder() const {
-	if (isEmpty()) {
-		std::cout << "inOrder called but list empty" << std::endl;
-		return;
-	}
-	inOrder(_root);
+
+//Inorder will traverse the tree printing and saveing the value of the nodes it comes across
+/*
+Inorder():
+  
+*/
+
+void BST::inOrder() const {    //TODO MAKE WITH A STACK OR QUEUE FOR E.C.
+
+inOrder(_root);
+
 }
 
 void BST::inOrder(BSTNode *node) const {
-	if (node) {
-		inOrder(node->left());
-		node->data()->print();
-		inOrder(node->right());
-	}
-
 }
+
+
+
+
+
 
 void BST::preOrder() const {
 	if (isEmpty()) {
