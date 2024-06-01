@@ -7,6 +7,41 @@
 #include <queue>
 #include <fstream>
 
+//this saves and prints the node that is given to a file 
+void printValue(BSTNode* node) { //TODO 
+
+	node->data()->print();
+	std::cout << " TESTING saveing to file DELETE ME WHEN DONE" << std::endl; //DELETE TESTING ONLY
+
+}
+
+// BFS or level order traversal will use a queue to traverse though the tree
+// It will print out each element and save to a file.
+// breadth()
+/*
+ if (root = nullptr):
+   return
+
+  create queue = q
+  q.enque root
+
+  while q.isEmpty == false
+
+	//prints current node
+	new node = q.front
+	print node
+	save node to file
+	q.pop()
+
+	//enques next node
+	if node.left != nullptr
+	  q.enque(node.left)
+
+	if node.right != nullptr
+	  q.enque(node.right)
+  endloop
+ */
+
 void BST::breadth() const {
 	if (isEmpty()) {
 		std::cout << "breadth called but list empty" << std::endl;
@@ -27,7 +62,7 @@ void BST::breadth() const {
 	}
 }
 
-void BST::inOrder() const {
+void BST::inOrder() const { // TODO MAKE WITH A STACK OR QUEUE FOR E.C.
 	if (isEmpty()) {
 		std::cout << "inOrder called but list empty" << std::endl;
 		return;
@@ -44,7 +79,7 @@ void BST::inOrder(BSTNode* node) const {
 
 }
 
-void BST::preOrder() const {
+void BST::preOrder() const { // TODO MAKE WITH A STACK OR QUEUE FOR E.C.
 	if (isEmpty()) {
 		std::cout << "preOrder called but list empty" << std::endl;
 		return;
@@ -60,7 +95,7 @@ void BST::preOrder(BSTNode* node) const {
 	}
 }
 
-void BST::postOrder() const {
+void BST::postOrder() const { // TODO MAKE WITH A STACK OR QUEUE FOR E.C.
 	if (isEmpty()) {
 		std::cout << "postOrder called but list empty" << std::endl;
 		return;
