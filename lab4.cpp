@@ -105,7 +105,7 @@ int main()
 
     //Get input
     std::string input = "";
-    cout << "Commands: add, remove, search, exit" << endl;
+    cout << "Commands: add, remove, search, quit" << endl;
 	  cout << "For add/remove/search, enter a currency value, e.g. \"add 12.44\"" << endl;
     std::getline(std::cin, input);
     
