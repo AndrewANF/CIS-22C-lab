@@ -2,7 +2,7 @@
 // BST.cpp
 // Linhnam Le & Andrew Forsberg
 // This assignment demonstrates binary search trees
-
+#pragma once
 #include "BST.h"
 #include <queue>
 #include <fstream>
