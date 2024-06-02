@@ -6,6 +6,7 @@
 #include <iostream>
 #include <vector>
 #include "BST.h"
+#include <sstream>
 
 using namespace std;
 
@@ -49,7 +50,20 @@ int main()
 
 	/*********************************************/
 
+	string line;
+	do {
+		cout << "Commands: add, remove, search, exit" << endl;
+		cout << "For add/remove/search, enter a currency value, e.g. \"add 12.44\"" << endl;
 
+		getline(cin, line);
+		stringstream ss(line);
+
+		string operation;
+		string value;
+
+		ss >> operation >> value;
+
+	} while (1);
 
 	return 0;
 }
