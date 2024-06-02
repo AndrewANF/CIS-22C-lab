@@ -7,9 +7,44 @@
 #include <vector>
 #include "BST.h"
 #include <sstream>
+#include <fstream>
 
 using namespace std;
 
+
+
+
+void clearfile(){
+	    std::ofstream ofs("output.txt", std::ios::trunc);
+    
+    // Check if the file was opened successfully
+    if (!ofs) {
+        std::cout << "error opening file" << std::endl;
+    }
+
+    // Close the file
+    ofs.close();
+}
+
+void appendAndClose(std::string messege) {
+
+	std::ofstream outfile("output.txt" , std::ios_base::app);
+
+    
+    if (outfile.is_open()) {
+        
+        outfile << messege << std::endl;
+
+        
+        outfile.close();
+    } else {
+        
+        std::cerr << "Unable to open file for writing." << std::endl;
+    }
+
+
+
+}
 const int SIZE = 20;
 const double TEST_VALS[SIZE] = {
 	57.12, 23.44, 87.43, 68.99, 111.22, 44.55, 77.77, 18.36, 543.21, 20.21,
@@ -18,6 +53,10 @@ const double TEST_VALS[SIZE] = {
 
 int main()
 {
+	//clears file 
+	clearfile();
+
+
 	// Data seeding
 
 	BST* tree = new BST();
@@ -36,15 +75,19 @@ int main()
 
 	// Four traversal methods. TODO: write to output log
 
+	appendAndClose("\nBFS");
 	cout << "\nBreadth follows:" << endl;
 	tree->breadth();
 
+	appendAndClose("\ninOrder");
 	cout << "\ninOrder follows:" << endl;
 	tree->inOrder();
 
+	appendAndClose("\npreOrder");
 	cout << "\npreOrder follows:" << endl;
 	tree->preOrder();
-
+	
+	appendAndClose("\npostOrder");
 	cout << "\npostOrder follows:" << endl;
 	tree->postOrder();
 

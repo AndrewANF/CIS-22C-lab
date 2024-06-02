@@ -3,14 +3,40 @@
 // Linhnam Le & Andrew Forsberg
 // This assignment demonstrates binary search trees
 #include "BST.h"
+#include <ostream>
 #include <queue>
 #include <fstream>
+#include <sstream>
 
 //this saves and prints the node that is given to a file 
 void printValue(BSTNode* node) { //TODO 
 
-	node->data()->print();
-	std::cout << " TESTING saveing to file DELETE ME WHEN DONE" << std::endl; //DELETE TESTING ONLY
+    std::stringstream ss;
+
+    ss << node->data()->wholePart() << "." << node->data()->fractPart();
+
+    std::string formattedString = ss.str();
+
+
+  std::cout << formattedString << ", ";
+  std::cout << std::endl;
+
+
+	std::ofstream outfile("output.txt" , std::ios_base::app);
+
+    
+    if (outfile.is_open()) {
+        
+        outfile << formattedString << ", ";
+
+        
+        outfile.close();
+    } else {
+        
+        std::cerr << "Unable to open file for writing." << std::endl;
+    }
+
+
 
 }
 
@@ -54,7 +80,7 @@ void BST::breadth() const {
 		BSTNode* currentNode = q.front();
 		q.pop();
 
-		currentNode->data()->print();
+		printValue(currentNode);
 
 		if (currentNode->left()) q.push(currentNode->left());
 		if (currentNode->right()) q.push(currentNode->right());
@@ -72,7 +98,7 @@ void BST::inOrder() const { // TODO MAKE WITH A STACK OR QUEUE FOR E.C.
 void BST::inOrder(BSTNode* node) const {
 	if (node) {
 		inOrder(node->left());
-		node->data()->print();
+		printValue(node);
 		inOrder(node->right());
 	}
 
@@ -88,7 +114,7 @@ void BST::preOrder() const { // TODO MAKE WITH A STACK OR QUEUE FOR E.C.
 
 void BST::preOrder(BSTNode* node) const {
 	if (node) {
-		node->data()->print();
+		printValue(node);
 		preOrder(node->left());
 		preOrder(node->right());
 	}
@@ -106,7 +132,8 @@ void BST::postOrder(BSTNode* node) const {
 	if (node) {
 		postOrder(node->left());
 		postOrder(node->right());
-		node->data()->print();
+		printValue(node);
+
 	}
 }
 
