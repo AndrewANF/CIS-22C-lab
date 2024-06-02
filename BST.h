@@ -71,4 +71,5 @@ private:
 	BSTNode* _root;
 };
 
+#include "BST.cpp"
 #endif
