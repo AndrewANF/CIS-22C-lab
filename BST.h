@@ -3,7 +3,8 @@
 // Linhnam Le & Andrew Forsberg
 // This assignment demonstrates binary search trees
 
-#pragma once
+#ifndef BST_H
+#define BST_H
 
 #include "Dollar.h"
 #include <queue>
@@ -70,4 +71,4 @@ private:
 	BSTNode* _root;
 };
 
-#include "BST.cpp"
+#endif // BST_H

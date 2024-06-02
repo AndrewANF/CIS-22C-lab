@@ -1,3 +1,6 @@
+#ifndef DOLLAR
+#define DOLLAR
+
 #include "Currency.h"
 
 // United States Dollar
@@ -18,7 +21,9 @@ private:
 };
 
 // default constructor
-Dollar::Dollar() : Currency() {};
+inline Dollar::Dollar() : Currency() {};
 
 // constructor given monetary value
-Dollar::Dollar(double amount) : Currency(amount) {};
+inline Dollar::Dollar(double amount) : Currency(amount) {};
+
+#endif //DOLLAR
