@@ -124,20 +124,33 @@ int main()
   if (tokens[0] == "add") {
     Dollar* newNode = new Dollar(std::stof(tokens[1]));
     tree->insert(newNode);
+
+	clearfile();
+  	traverse(tree);
   }
 
   if (tokens[0] == "remove") {
     Dollar* newNode = new Dollar(std::stof(tokens[1]));
     tree->remove(newNode);
+
+	clearfile();
+	traverse(tree);
   }
  
-    if (tokens[0] == "remove") {
+    if (tokens[0] == "search") {
     Dollar* newNode = new Dollar(std::stof(tokens[1]));
-    tree->remove(newNode);
+    BSTNode* result = tree->search(newNode);
+
+
+    if (result) {
+      cout << "Matching Node Found!" << endl;
+      }
+    else {
+        cout << "No Matching Node Found" << endl;
+      }
   }
  
-  clearfile();
-  traverse(tree);
+
 
 }
 
