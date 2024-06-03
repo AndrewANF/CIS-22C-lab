@@ -68,18 +68,21 @@ void appendAndClose(std::string messege , string additionalInfo) {
 }
 
 //valid is any number thats not negitive 
-bool valid(string currencyValue){
+bool valid(string s){
 
-  try {
-    if (stod(currencyValue) < 0) {
-    return false;
-  }
-  } catch (...) {
+    try {
+        size_t size;
+        double num = std::stod(s, &size);
+        if (size != s.size()) {
+            return false;
+        }
+        return true;
 
-   return false;
-  
-  }
-  return true;
+    } catch (const std::invalid_argument& e) {
+        return false;
+    } catch (...) {
+        return false;
+    }
 }
 
 void traverse(BST* tree){
@@ -143,7 +146,7 @@ int main()
 
     //Get input
     std::string input = "";
-    cout << "\nCommands: add, remove, search, quit" << endl;
+    cout << "\n\nCommands: add, remove, search, quit" << endl;
 	  cout << "For add/remove/search, enter a currency value, e.g. \"add 12.44\"" << endl;
     std::getline(std::cin, input);
     
@@ -232,7 +235,7 @@ int main()
           }
         }else {
           //if invalid value enterd
-          cout << "Invalid Value entered : " << tokens[i] << endl;
+          cout << "Invalid Value entered : " << tokens[i];
           appendAndClose("\nInvalid Value entered : " , tokens[i]);
         }
       }
