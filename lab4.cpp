@@ -100,7 +100,7 @@ void traverse(BST* tree){
 	cout << "\npostOrder follows:" << endl;
 	tree->postOrder();
 
-  appendAndClose("-------------------------------------------------");
+  appendAndClose("\n-------------------------------------------------");
 
 }
 
