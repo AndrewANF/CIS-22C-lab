@@ -19,7 +19,7 @@ void printValue(BSTNode* node) { //TODO
 
 
   std::cout << formattedString << ", ";
-  std::cout << std::endl;
+  
 
 
 	std::ofstream outfile("output.txt" , std::ios_base::app);
@@ -176,49 +176,53 @@ BSTNode* BST::insert(BSTNode* node, Currency* target) {
 
 // User-facing method, calls recursive remove
 void BST::remove(Currency* target) {
-	remove(_root, target);
+    _root = remove(_root, target);
 }
-
-// TODO: this method can be rewritten to call search()
-// and operate on the node it finds
 
 BSTNode* BST::remove(BSTNode* node, Currency* target) {
-	if (node == nullptr) {
-		return nullptr; // do nothing on empty tree
-	}
+    if (node == nullptr) {
+        return nullptr; // Base case: node not found
+    }
 
-	if (node->data()->isGreater(*target)) {
-		node->setLeft(remove(node->left(), target));
-	}
-	else if (!node->data()->isGreater(*target)) {
-		node->setRight(remove(node->right(), target));
-	}
-	else {
-		if (node->left() == nullptr) {
-			BSTNode* temp = node->right();
-			delete node;
-			return temp;
-		}
-		else if (node->right() == nullptr) {
-			BSTNode* temp = node->right();
-			delete node;
-			return temp;
-		}
+    // Search for the node to remove
+    BSTNode* targetNode = search(target);
+    if (targetNode == nullptr) {
+        return node; // Target node not found
+    }
 
-		// Go right, then travel down left-child to find next node
-		BSTNode* successor = node->right();
-		while (successor && successor->left() != nullptr) {
-			successor = successor->left();
-		}
+    if (node == targetNode) {
+        // Node with only one child or no child
+        if (node->left() == nullptr) {
+            BSTNode* temp = node->right();
+            delete node;
+            return temp;
+        } else if (node->right() == nullptr) {
+            BSTNode* temp = node->left();
+            delete node;
+            return temp;
+        }
 
-		// Clone successor's data to current node
-		node->setData(successor->data());
+        // Node with two children: Get the in-order successor (smallest in the right subtree)
+        BSTNode* successor = node->right();
+        while (successor && successor->left() != nullptr) {
+            successor = successor->left();
+        }
 
-		// Remove the successor node that we just cloned
-		node->setRight(remove(node->right(), successor->data()));
-	}
-	return node;
+        // Copy the successor's data to this node
+        node->setData(successor->data());
+
+        // Delete the successor
+        node->setRight(remove(node->right(), successor->data()));
+    } else if (node->data()->isGreater(*target)) {
+        node->setLeft(remove(node->left(), target));
+    } else {
+        node->setRight(remove(node->right(), target));
+    }
+
+    return node;
 }
+
+
 
 void BST::empty() {
 	if (isEmpty()) { return; }
