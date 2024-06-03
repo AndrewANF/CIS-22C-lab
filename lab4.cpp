@@ -103,7 +103,7 @@ void traverse(BST* tree){
 	cout << "\npostOrder follows:" << endl;
 	tree->postOrder();
 
-  appendAndClose("\n-------------------------------------------------");
+  appendAndClose("\n----------------------------------------------------------------------");
 
 }
 
@@ -122,7 +122,7 @@ int main()
 	// Data seeding
 
 	BST* tree = new BST();
-	tree->inOrder();
+	//tree->inOrder();
 
 	vector<Currency*> currencies;
 	for (int i = 0; i < SIZE; i++) {
@@ -146,7 +146,7 @@ int main()
 
     //Get input
     std::string input = "";
-    cout << "\n\nCommands: add, remove, search, quit" << endl;
+    cout << "\n\nCommands: add, remove, search, traverse, quit" << endl;
 	  cout << "For add/remove/search, enter a currency value, e.g. \"add 12.44\"" << endl;
     std::getline(std::cin, input);
     
@@ -161,6 +161,8 @@ int main()
     }
 
     if (tokens[0] == "q" || tokens[0] == "quit"){return 0;} //quit program if q is entered
+    
+    if (tokens[0] == "traverse") {traverse(tree);}
 
     
     if (tokens[0] == "add") {
@@ -180,8 +182,6 @@ int main()
           appendAndClose("\nInvalid Value entered : " , tokens[i]);
         } 
       }
-      
-      traverse(tree);
     }
 
     if (tokens[0] == "remove") {
@@ -211,7 +211,6 @@ int main()
           appendAndClose("\nInvalid Value entered : " , tokens[i]);
         }
       }
-      traverse(tree);
     }
   
       if (tokens[0] == "search") {
