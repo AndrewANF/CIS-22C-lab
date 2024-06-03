@@ -4,6 +4,8 @@
 // This assignment demonstrates binary search trees
 
 #include <iostream>
+#include <ostream>
+#include <string>
 #include <vector>
 #include "BST.h"
 #include "Dollar.h"
@@ -46,6 +48,40 @@ void appendAndClose(std::string messege) {
 
 }
 
+void appendAndClose(std::string messege , string additionalInfo) {
+
+	std::ofstream outfile("output.txt" , std::ios_base::app);
+
+    
+    if (outfile.is_open()) {
+        
+        outfile << messege << additionalInfo << std::endl;
+
+        
+        outfile.close();
+    } else {
+        
+        std::cerr << "Unable to open file for writing." << std::endl;
+    }
+
+
+}
+
+//valid is any number thats not negitive 
+bool valid(string currencyValue){
+
+  try {
+    if (stod(currencyValue) < 0) {
+    return false;
+  }
+  } catch (...) {
+
+   return false;
+  
+  }
+  return true;
+}
+
 void traverse(BST* tree){
 
   appendAndClose("\nBFS");
@@ -63,6 +99,8 @@ void traverse(BST* tree){
 	appendAndClose("\npostOrder");
 	cout << "\npostOrder follows:" << endl;
 	tree->postOrder();
+
+  appendAndClose("-------------------------------------------------");
 
 }
 
@@ -105,7 +143,7 @@ int main()
 
     //Get input
     std::string input = "";
-    cout << "Commands: add, remove, search, quit" << endl;
+    cout << "\nCommands: add, remove, search, quit" << endl;
 	  cout << "For add/remove/search, enter a currency value, e.g. \"add 12.44\"" << endl;
     std::getline(std::cin, input);
     
@@ -113,48 +151,92 @@ int main()
     std::istringstream iss(input);
     std::vector<std::string> tokens;
     std::string token;
-    
+
+
     while(iss >> token){
       tokens.push_back(token);
     }
 
-	if (tokens[0] == "q" || tokens[0] == "quit"){return 0;} //quit program if q is entered
+    if (tokens[0] == "q" || tokens[0] == "quit"){return 0;} //quit program if q is entered
 
+    
+    if (tokens[0] == "add") {
+
+      for (int i = 1; i < tokens.size(); i++) {
+        if (valid(tokens[i])) {
+          //write to screen and output
+          cout << "Inserting value : " << tokens[i] << endl;
+          appendAndClose("\ninserting value : " , tokens[i]);
+
+          //perform op
+          Dollar* newNode = new Dollar(std::stof(tokens[i]));
+          tree->insert(newNode);
+        }else {
+          //if invalid value enterd
+          cout << "Invalid Value entered : " << tokens[i] << endl;
+          appendAndClose("\nInvalid Value entered : " , tokens[i]);
+        } 
+      }
+      
+      traverse(tree);
+    }
+
+    if (tokens[0] == "remove") {
+      for (int i = 1; i < tokens.size(); i++) {
+        if (valid(tokens[i])) {
+
+
+          Dollar* newNode = new Dollar(std::stof(tokens[i]));
+          stringstream ss;
+          ss << newNode->wholePart() << "." << newNode->fractPart(); 
+
+          if (!(tree->search(newNode) == nullptr)) {
+            //write to screen and output
+            cout << "removeing node : " << tokens[i] << endl;
+            appendAndClose("\nremoveing node : " , tokens[i]);
+
+            //perform op
+            
+            tree->remove(newNode);
+          }else {
+            //if invalid value entered
+            cout << "Unable to remove node. Node not found : " << ss.str() << endl;
+            appendAndClose("\nUnable to remove node. Node not found :" , ss.str());
+          } 
+        }else {
+          cout << "Invalid Value entered : " << tokens[i] << endl;
+          appendAndClose("\nInvalid Value entered : " , tokens[i]);
+        }
+      }
+      traverse(tree);
+    }
   
-  if (tokens[0] == "add") {
-    Dollar* newNode = new Dollar(std::stof(tokens[1]));
-    tree->insert(newNode);
-
-	clearfile();
-  	traverse(tree);
-  }
-
-  if (tokens[0] == "remove") {
-    Dollar* newNode = new Dollar(std::stof(tokens[1]));
-    tree->remove(newNode);
-
-	clearfile();
-	traverse(tree);
-  }
- 
-    if (tokens[0] == "search") {
-    Dollar* newNode = new Dollar(std::stof(tokens[1]));
-    BSTNode* result = tree->search(newNode);
+      if (tokens[0] == "search") {
 
 
-    if (result) {
-      cout << "Matching Node Found!" << endl;
+
+      for (int i = 1; i < tokens.size(); i++) {
+        if (valid(tokens[i])) {
+          Dollar* newNode = new Dollar(std::stof(tokens[i]));
+
+          stringstream ss;
+          ss << "\n" << newNode->wholePart() << "." << newNode->fractPart(); 
+
+          if ((tree->search(newNode)) != nullptr){
+            cout << ss.str() << ": Found";
+            appendAndClose(ss.str(), ": Found");
+          }else {
+            cout << ss.str() << ": Not Found";
+            appendAndClose(ss.str(), ": Not Found");
+
+          }
+        }else {
+          //if invalid value enterd
+          cout << "Invalid Value entered : " << tokens[i] << endl;
+          appendAndClose("\nInvalid Value entered : " , tokens[i]);
+        }
       }
-    else {
-        cout << "No Matching Node Found" << endl;
-      }
+    }
   }
- 
-
-
+  return 0;
 }
-
-	return 0;
-}
-
-
