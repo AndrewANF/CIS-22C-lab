@@ -30,7 +30,11 @@ class HashTable{
 
     void display();
 
+    
+
   private:
+  
+    int hashFunc(double amount); 
 
     int _currentSize;
 
@@ -38,8 +42,7 @@ class HashTable{
 
     std::vector<Currency*> _table;
 
-    int hashFunc(double amount);
-
+  
     int findPosition(Currency& targetCurr);
     
 };
