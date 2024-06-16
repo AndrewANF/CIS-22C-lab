@@ -1,7 +1,7 @@
-// Lab 4 - 1 June 2024
-// lab4.cpp
+// Lab 5 - 16 June 2024
+// lab5.cpp
 // Linhnam Le & Andrew Nunez Forsberg
-// This assignment demonstrates binary search trees
+// This assignment demonstrates a Hashtable
 
 
 
@@ -27,12 +27,13 @@ int main()
   //create hash table
   HashTable table(29);
 
-	// Data seeding TODO
+	// Data seeding 
   
   for (double num : TEST_VALS) {
 
     Dollar insertedDollar(num);
     table.insert(insertedDollar); 
+    
   }
   
 
@@ -59,6 +60,10 @@ int main()
     if( tokens[0] == "search"){
       
       cout << "seaching TODO" << endl;//TODO
+
+      Dollar seachCurr(stod(tokens[1]));
+      table.search(seachCurr);
+
 
     }
 
