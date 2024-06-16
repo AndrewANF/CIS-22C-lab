@@ -27,15 +27,21 @@ int main()
   //create hash table
   HashTable table(29);
 
-	// Data seeding 
   
+ 
+ 
+ 
+	// Data seeding  
+
   for (double num : TEST_VALS) {
 
-    Dollar insertedDollar(num);
-    table.insert(insertedDollar); 
-    
+    Dollar* insertedDollar = new Dollar(num);
+    table.insert(*insertedDollar); 
+   // cout << (table.hashFunc(num) % 29)  << endl;
   }
-  
+
+  table.display();
+
 
   while(true){
 

@@ -30,11 +30,11 @@ class HashTable{
 
     void display();
 
-    
+    int hashFunc(double amount); //TODO Change to Private Befor Upload
 
   private:
   
-    int hashFunc(double amount); 
+    
 
     int _currentSize;
 
