@@ -29,21 +29,24 @@ bool HashTable::insert(Currency& newCurr){
 
   int i = 0;
   int bucketsProbed = 0;
-  double currValue = (newCurr.wholePart() + (newCurr.fractPart() / 100.0)); 
+  double currValue = (newCurr.wholePart() + (newCurr.fractPart() / 100.0));
 
   int bucket = hashFunc(currValue) % _table.size();
 
   while (bucketsProbed < _table.size()) {
-  
+ 
+     // std::cout << currValue<< " : " << bucket << "-----";
     if (_table[bucket] == nullptr) {
       _table[bucket] = &newCurr;
+      _currentSize++;
       return true;
     }
 
     //increment i by 1
-    
-    i++;
+    _collisions += 1;
+    i += 1;
     bucket = ( hashFunc(currValue)  + (1*i) + (1*i*i) ) % _table.size();
+    //std::cout << bucket << "|" << std::endl;
   }
 
   return false;
@@ -62,11 +65,15 @@ void HashTable::display() {
   
     std::cout << bucket << ": ";
     if (_table[bucket] == nullptr) {
-      std::cout << "nullptr" << std::endl;
+      std::cout << "Empty" << std::endl;
     }else {
       std::cout << _table[bucket]->wholePart() << "." << _table[bucket]->fractPart() << std::endl;
     } 
-  }  
+  }
+
+  std::cout << "Data Items Loaded: " << _currentSize << std::endl;
+  std::cout << "Load Factor: " << loadFactor() << std::endl;
+  std::cout << "Number Of Collisions: " << _collisions << std::endl;
 }
 
  

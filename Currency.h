@@ -49,10 +49,15 @@ inline Currency::Currency() : _wholePart(0) , _fractPart(0) {} //SHOULD THIS BE 
 inline Currency::Currency(double &amount) {
     if (amount < 0) { amount *= -1; } // discards negative sign if necessary
 
-    _wholePart = static_cast<int>(amount);
-    _fractPart = static_cast<int>(round100th(amount) * 100) % 100;
-}
 
+    _wholePart = static_cast<int>(amount);
+
+    double integerPart;
+    double fractionalPart = std::modf(amount, &integerPart) * 100;
+
+    _fractPart = static_cast<int>(std::round(fractionalPart));
+    
+}
 // Destructor
 inline Currency::~Currency(){
     // nothing to delete at the moment
