@@ -31,11 +31,13 @@ int main()
   
   for (double num : TEST_VALS) {
 
-    Dollar insertedDollar(num);
-    table.insert(insertedDollar); 
+    Dollar* insertedDollar = new Dollar(num);
+    table.insert(*insertedDollar); 
     
   }
   
+  table.display();
+
 
   while(true){
 
