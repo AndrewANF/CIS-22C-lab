@@ -54,7 +54,38 @@ bool HashTable::insert(Currency& newCurr){
 
 Currency getValue(int index); // TODO
 
-int HashTable::search(Currency& searchValue) {return 0;} //TODO
+int HashTable::search(Currency& searchValue) {  
+
+
+  std::cout << "test1";
+  int index = -1;
+  int i = 0;
+  int bucketsProbed = 0;
+  double currValue = (searchValue.wholePart() + (searchValue.fractPart() / 100.0));
+
+  std::cout << "test2";
+  int bucket = hashFunc(currValue) % _table.size();
+
+  while (bucketsProbed <= _table.size()) {
+ 
+    if (_table[bucket]->isEqual(searchValue)) {
+      index = bucket;
+      break;
+    } else if (_table[bucket] == nullptr) {
+      break;
+    }
+    std::cout << "test3";
+    //increment i by 1
+    i += 1;
+    bucketsProbed += 1;
+    bucket = ( hashFunc(currValue)  + (1*i) + (1*i*i) ) % _table.size();
+
+    std::cout << bucketsProbed << " ";
+
+  }
+
+  return index;
+} //TODO
 
 bool HashTable::remove(Currency& targetCurr) {return false;} //TODO
 

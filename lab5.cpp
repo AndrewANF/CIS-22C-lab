@@ -7,6 +7,7 @@
 
 #include "Dollar.h"
 #include "HashTable.h"
+#include <iostream>
 #include <vector>
 
 
@@ -37,7 +38,7 @@ int main()
 
     Dollar* insertedDollar = new Dollar(num);
     table.insert(*insertedDollar); 
-   // cout << (table.hashFunc(num) % 29)  << endl;
+   
   }
 
   table.display();
@@ -51,27 +52,39 @@ int main()
 	  cout << "For search enter a currency value, e.g. \"search 12.44\"" << endl;
     std::getline(std::cin, input);
     
+    cout << "test001";
+
     //Tokenize the input
     std::istringstream iss(input);
     std::vector<std::string> tokens;
     std::string token;
 
+    cout << "test002";
 
     while(iss >> token){
       tokens.push_back(token);
     }
 
+    cout << "test003";
     if (tokens[0] == "q" || tokens[0] == "quit"){return 0;} //quit program if q is entered
     
     if( tokens[0] == "search"){
-      
-      cout << "seaching TODO" << endl;//TODO
 
-      Dollar seachCurr(stod(tokens[1]));
-      table.search(seachCurr);
+
+      cout << "test01";
+      Dollar searchCurr(stod(tokens[1]));
+      cout << "test02";
+      int indexResult = table.search(searchCurr);
+
+      if (indexResult == -1){
+        cout << "Invalid Data" << endl;
+      }else{
+        cout << "Index: " << indexResult << endl;
+      }
 
 
     }
+
 
   }
 
