@@ -10,6 +10,7 @@
 #include <string>
 #include <sstream>
 #include <cctype>
+#include <algorithm>
 
 using namespace std;
 
@@ -53,7 +54,7 @@ int main()
         while (iss >> token) {
             tokens.push_back(token);
         }
-
+        
         // cout << "Token push-back successful..." << endl;
 
         // Quit condition
@@ -65,9 +66,7 @@ int main()
             // Compact lambda function to identify errant inputs
             // Flags true if characters other than number or decimal point found
             // Uses cctype header
-            bool hasLetters = find_if
-            ( tokens[1].begin(), tokens[1].end(), [] (char c) { return isalpha(c); } )
-                != tokens[1].end();
+            bool hasLetters = find_if( tokens[1].begin(), tokens[1].end(), [] (char c) { return isalpha(c); } ) != tokens[1].end();
 
             if (hasLetters) { // Search code will not proceed if input cannot be read
                 cout << "Failed to recognize numerical input - please try again";

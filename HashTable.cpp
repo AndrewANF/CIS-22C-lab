@@ -33,6 +33,39 @@ int HashTable::hashFunc(double amount) {
     return (m * w + n * f);
 }
 
+
+bool isPrime(int n){
+
+    if (n <= 1) return false;
+    if (n <= 3) return true;
+
+    if (n % 2 == 0 || n % 3 == 0) return false;
+
+    for (int i = 5; i * i <= n; i += 6) {
+        if (n % i == 0 || n % (i + 2) == 0) return false;
+    }
+    return true;
+}
+
+
+
+
+int nextPrime(int n){
+
+    if (n <= 1) return 2;
+
+    int prime = n;
+    while (!isPrime(prime)) {
+        prime++;
+    }
+
+    return prime;
+
+}
+
+
+
+
 int HashTable::findPosition(Currency& targetCurr) { return 0; } // TODO
 
 // Collision resolution: use quadratic probing in the same direction always
@@ -43,6 +76,12 @@ bool HashTable::insert(Currency& newCurr) {
     double currValue = (newCurr.wholePart() + (newCurr.fractPart() / 100.0));
 
     int bucket = hashFunc(currValue) % _table.size();
+
+    if (loadFactor() > .6 ) {
+
+      std::cout << "Load Factor Exceeds .6 ! \nresizing.\nReseting collision count " << std::endl;
+      resize();
+    }
 
     while (bucketsProbed < _table.size()) {
 
@@ -121,3 +160,24 @@ void HashTable::display() {
     std::cout << "Load Factor: " << loadFactor() << std::endl;
     std::cout << "Number Of Collisions: " << _collisions << std::endl;
 }
+
+void HashTable::resize(){
+
+  int newSize = nextPrime(_table.size()*2);
+  std::vector<Currency*> temp = _table;
+
+  _table.resize(newSize);
+  _currentSize = 0;
+  _collisions = 0;
+
+  for (int i = 0; i < newSize ; i++) {
+    _table[i] = nullptr;
+  }
+
+  for (Currency* i  : temp) {
+    if (!(i == nullptr)) {
+      insert(*i);
+    } 
+  }
+}
+

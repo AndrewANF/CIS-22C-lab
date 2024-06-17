@@ -26,10 +26,14 @@ public:
     double loadFactor() { return static_cast<double>(_currentSize) / _table.size(); }
 
 
+        void resize();
+
+
 private:
     // hash and find are kept private. See hashFunc() for hash algorithm
     int hashFunc(double amount);
     int findPosition(Currency& targetCurr); // TODO
+
 
     int _currentSize;
     int _collisions;
