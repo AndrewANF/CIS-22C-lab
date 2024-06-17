@@ -75,27 +75,31 @@ bool HashTable::insert(Currency& newCurr) {
     int bucketsProbed = 0;
     double currValue = (newCurr.wholePart() + (newCurr.fractPart() / 100.0));
 
-    int bucket = hashFunc(currValue) % _table.size();
+    int bucket = hashFunc(currValue) % _table.capacity();
 
-    if (loadFactor() > .6 ) {
-
-      std::cout << "Load Factor Exceeds .6 ! \nresizing.\nReseting collision count " << std::endl;
-      resize();
-    }
-
-    while (bucketsProbed < _table.size()) {
+ 
+    while (bucketsProbed < _table.capacity()) {
 
         // std::cout << currValue<< " : " << bucket << "-----";
         if (_table[bucket] == nullptr) {
             _table[bucket] = &newCurr;
             _currentSize++;
+
+            if (loadFactor() > .6 ) {
+
+                std::cout << "Load Factor Exceeds .6 ! \nresizing.\nReseting collision count " << std::endl;
+                resize();
+                }
+
+
+
             return true;
         }
 
         // increment i by 1
         _collisions += 1;
         i += 1;
-        bucket = (hashFunc(currValue) + (1 * i) + (1 * i * i)) % _table.size();
+        bucket = (hashFunc(currValue) + (1 * i) + (1 * i * i)) % _table.capacity();
         //std::cout << bucket << "|" << std::endl;
     }
 

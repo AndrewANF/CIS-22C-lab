@@ -14,6 +14,30 @@
 
 using namespace std;
 
+
+//valid is any number thats not negitive 
+bool valid(string s){
+
+    try {
+        size_t size;
+        std::stod(s, &size);
+        if (size != s.size()) {
+            return false;
+        }
+        if (stod(s) < 0){
+          return false;
+        }
+        return true;
+
+    } catch (const std::invalid_argument& e) {
+        return false;
+    } catch (...) {
+        return false;
+    }
+}
+
+
+
 // Pre-determined data and table size per assignment instructions
 const int TABLE_SIZE = 29;
 const int SIZE = 20;
@@ -38,7 +62,7 @@ int main()
     while (true) {
         // Get input
         std::string input = "";
-        cout << "\nCommands: search, quit" << endl;
+        cout << "\nCommands: add/insert, search, quit" << endl;
         cout << "For search enter a currency value, e.g. \"search 12.44\"" << endl;
         std::getline(std::cin, input);
 
@@ -86,12 +110,30 @@ int main()
                     cout << "Index: " << indexResult << endl;
                 }
             }
-        }
+        }   else if (tokens[0] == "add" || tokens[0] ==  "insert") {
+              for (int i = 1; i < tokens.size(); i++) {
+                if (valid(tokens[i])) {
+                  //write to screen and output
+                  cout << "Inserting value : " << tokens[i] << endl;
+                  //perform op
+                  Dollar* addCurr = new Dollar(stod(tokens[i]));
+                  table.insert(*addCurr);
+
+                }else {
+                  //if invalid value enterd
+                  cout << "Invalid Value entered : " << tokens[i] << endl;
+                } 
+              }
+
+              table.display();
+            }
 
         // Repeat if cmd not known
         else {
             cout << "Command not recognized - please search or quit";
         }
+
+
     }
 
     return 0;
