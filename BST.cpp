@@ -323,7 +323,10 @@ int BST::count(BSTNode* node) const {
 }
 
 void BST::print() const {
-
+  breadth();
+  inOrder();
+  preOrder();
+  postOrder();
 }
 
 void BST::logger(Currency* target) const {
