@@ -8,6 +8,7 @@
 
 #include "Dollar.h"
 #include <iostream>
+#include <iterator>
 #include "MinHeap.h"    
 
 const int SIZE = 20;
@@ -25,18 +26,18 @@ int main() {
        // After 10th item print traversal methods
       if (i == 10) {
         std::cout << "Tenth Item added, Printing traversals: \n";
-       // heap.print();
+        heap.print();
       }
       Dollar* newNode = new Dollar(TEST_VALS[i]);
       heap.insert(newNode);
 
     }
      //After last item print traversal methods
-    std::cout << "Final item added, Printing traversals:\n";
-    //heap.print();
+    std::cout << "\n\nFinal item added, Printing traversals:\n";
+    heap.print();
 
 
-
+    std::cout << std::endl;
     //exit program
     return 0;
 }

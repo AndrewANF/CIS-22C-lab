@@ -3,6 +3,7 @@
 // Linhnam Le & Andrew Forsberg
 // This assignment demonstrates binary search trees
 #include "BST.h"
+#include <iostream>
 #include <ostream>
 #include <queue>
 #include <fstream>
@@ -27,18 +28,18 @@ void printValue(BSTNode* node) { //TODO
   
 
 
-	std::ofstream outfile("output.txt" , std::ios_base::app);
+	// std::ofstream outfile("output.txt" , std::ios_base::app);
 
-    if (outfile.is_open()) {
+    // if (outfile.is_open()) {
         
-        outfile << formattedString << ", ";
+    //     outfile << formattedString << ", ";
 
         
-        outfile.close();
-    } else {
+    //     outfile.close();
+    // } else {
         
-        std::cerr << "Unable to open file for writing." << std::endl;
-    }
+    //     std::cerr << "Unable to open file for writing." << std::endl;
+    // }
 }
 
 // BFS or level order traversal will use a queue to traverse though the tree
@@ -331,9 +332,13 @@ int BST::count(BSTNode* node) const {
 }
 
 void BST::print() const {
+  std::cout << "\nBreadth : ";
   breadth();
+  std::cout << "\nIn Order : ";
   inOrder();
+  std::cout << "\nPre Order : ";
   preOrder();
+  std::cout << "\nPost Order : ";
   postOrder();
 }
 
