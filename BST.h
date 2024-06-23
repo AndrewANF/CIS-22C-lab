@@ -45,6 +45,9 @@ public:
 	void preOrder() const;
 	void postOrder() const;
 
+	BSTNode* getRoot() {return _root;}
+	void setRoot(BSTNode* root) {_root = root;}
+
 	BSTNode* search(Currency* target) const;	// Search for node w/ matching value
 	void remove(Currency* target);		// Remove node w/ matching value
 	void empty();						// Empty da whole thang
@@ -64,7 +67,6 @@ private:
 	BSTNode* search(BSTNode* node, Currency* target) const;
 	void empty(BSTNode* node);
 	int count(BSTNode* node) const;
-	BSTNode* insert(BSTNode* node, Currency* target);
 
 	void logger(Currency* target) const;
 
