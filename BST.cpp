@@ -71,6 +71,14 @@ void printValue(BSTNode* node) { //TODO
   endloop
  */
 
+BSTNode* BST::getRoot(){
+	return _root;
+}
+void BST::setRoot(BSTNode* newValue){
+	_root = newValue;
+}
+
+
 void BST::breadth() const {
 	if (isEmpty()) {
 		std::cout << "breadth called but list empty" << std::endl;

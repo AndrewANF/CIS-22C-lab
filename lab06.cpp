@@ -7,7 +7,6 @@
 
 
 #include "Dollar.h"
-#include <string>
 #include <iostream>
 #include "MinHeap.h"    
 
@@ -25,11 +24,16 @@ int main() {
     for (int i = 0; i < SIZE ; i++) {
        // After 10th item print traversal methods
       if (i == 10) {
+        std::cout << "Tenth Item added, Printing traversals: \n";
         heap.print();
       }
+      Dollar* newNode = new Dollar(TEST_VALS[i]);
+      heap.insert(newNode);
+
     }
      //After last item print traversal methods
-  
+    std::cout << "Final item added, Printing traversals:\n";
+    heap.print();
 
 
 

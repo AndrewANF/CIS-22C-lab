@@ -25,37 +25,68 @@ class MinHeap: public BST{
  private:
 
   BSTNode* remove(BSTNode* node, Currency* target);
-  BSTNode* search(BSTNode* node, Currency* target) const;
+  BSTNode* search(BSTNode* node, Currency* target);
   BSTNode* insert(BSTNode* node, Currency* target);
   void minHeapify(BSTNode* node);
  
   //gets the next parent of the next 
   //node with < 2 children
-  BSTNode* getNextParent() const;
+  BSTNode* getNextParent();
+  BSTNode* getNextParent(BSTNode* node);
  
  
 
 };
 
-inline void minHeapify(){
-  if () {
+
+inline BSTNode* MinHeap::getNextParent() {
+
   
+  if (getRoot() == nullptr) {
+    return nullptr;
+  }
+
+
+  std::queue<BSTNode*> q;
+  q.push(getRoot());
+
+  while (!q.empty()) {
+	  BSTNode* currentNode = q.front();
+	  q.pop();
+
+      if (currentNode->left() == nullptr || currentNode->right() == nullptr) {
+          return currentNode;
+      }
+
+	  if (currentNode->left()) q.push(currentNode->left());
+	  if (currentNode->right()) q.push(currentNode->right());
+  }
+
+  return nullptr;
+}
+
+
+
+
+inline void MinHeap::minHeapify(){
+  if (getRoot()) {
+    if (getRoot()->left()) {
+      minHeapify(getRoot());
+    }
   }
 }
 
-inline void minHeapify(BSTNode* node){
+inline void MinHeap::minHeapify(BSTNode* node){
 
   if (node) {
 
     //check left sub tree
     if (node->left()) {
-        minHeapify(node->left());
-
+      minHeapify(node->left());
     }
     //check right suntree
     if (node->right()) {
-        minHeapify(node->right());
-    
+      minHeapify(node->right());
     }
 
 
@@ -109,19 +140,24 @@ inline void minHeapify(BSTNode* node){
 
 inline void MinHeap::insert(Currency* target) {
 
+
+
   //newNode will be the node
   //that is inserted
   BSTNode* newNode = new BSTNode(target);
 
-  // parentNode will be used to 
-  // deside where to put newNode
-  BSTNode* parentNode = getNextParent();
-  if (parentNode->left() == nullptr) {
-    parentNode->setLeft(newNode); 
-  } else {
-   parentNode->setRight(newNode);
+  if (getRoot() == nullptr) {
+    setRoot(newNode);
+  }else{
+    // parentNode will be used to 
+    // deside where to put newNode
+    BSTNode* parentNode = getNextParent();
+    if (parentNode->left() == nullptr) {
+        parentNode->setLeft(newNode); 
+    } else {
+        parentNode->setRight(newNode);
+    }
   }
-  
   minHeapify();
 
 }
