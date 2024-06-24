@@ -22,10 +22,10 @@ class MinHeap: public BST{
   
   int _heapSize = 0;
 
+  BSTNode* getLastLevelsLastNode();
 
  private:
 
-  BSTNode* getLastLevelsLastNode();
 
   BSTNode* remove(BSTNode* node, Currency* target);
   BSTNode* search(BSTNode* node, Currency* target);
@@ -86,7 +86,6 @@ inline void MinHeap::minHeapify(){
 //Used to enable recusive checking of the heap
 //I may want to change the way that swapping works swap objects not change values TODO?
 inline void MinHeap::minHeapify(BSTNode* node){
-
   if (!node) return;
 
   if (node->left()) {
@@ -208,71 +207,103 @@ inline BSTNode* MinHeap::search(BSTNode* node, Currency* target) {
 	return nullptr; // returns null if node not found
 }
 
-inline BSTNode* MinHeap::getLastLevelsLastNode(){
+// Using breadth traversal, return "last" node in heap (bottom-most, right-most)
+BSTNode* MinHeap::getLastLevelsLastNode() {
+    if (getRoot() == nullptr) { // nullptr on empty heap
+        return nullptr;
+    }
 
+    // breadth traversal. uses queue class written for previous lab
+    std::queue<BSTNode*> q;
+    q.push(getRoot());
 
-  if (getRoot() == nullptr) {
-    return nullptr;
-  }
+    // this is the node that will be returned
+    BSTNode* target = nullptr;
 
+    while (!q.empty()) {
+        BSTNode* currentNode = q.front();
+        q.pop();
 
-  BSTNode* prevNode = nullptr;
-  std::queue<BSTNode*> q;
-  q.push(getRoot());
+        target = currentNode;
 
-  while (!q.empty()) {
-	  BSTNode* currentNode = q.front();
-	  q.pop();
-      if (currentNode->left() == nullptr && currentNode->right() == nullptr ) {
-        if (prevNode == nullptr) {
-          return currentNode;
-        } else {
-
-          if (prevNode->left() == nullptr) {
-            return prevNode->left();
-          }
-          else if (prevNode->right() == nullptr) { //I could just to the else but makes it more readable
-            return prevNode->right();
-          }
-          
+        if (currentNode->left() != nullptr) {
+            q.push(currentNode->left());
         }
-      }
-
-      if (currentNode->right() == nullptr) {
-          return currentNode->right();
-      }
-
-	  if (currentNode->left()) q.push(currentNode->left());
-	  if (currentNode->right()) q.push(currentNode->right());
-    prevNode = currentNode;
-
-  }
-
-  return nullptr;
-
-
-
-}
-
-
-
-inline void MinHeap::remove(Currency* target) {
-    setRoot( remove(getRoot(), target));
-}
-
-//remove helper function to enable recursion
-inline BSTNode* MinHeap::remove(BSTNode* node, Currency* target) {
-    if (node == nullptr) {
-        return nullptr; // Base case: node not foun
+        if (currentNode->right() != nullptr) {
+            q.push(currentNode->right());
+        }
     }
 
-    // Search for the node to remove
+    return target;
+}
+
+
+// jyn's special sauce remove algorithm (NOT recursive)
+void MinHeap::remove(Currency* target) {
+
+
+
+    // do nothing on empty heap
+    if (getRoot() == nullptr) {
+        return;
+    }
+
+
+    // Call search to grab targetNode
     BSTNode* targetNode = search(target);
+
     if (targetNode == nullptr) {
-        return node; // Target node not found
+        return;
     }
 
-          
+    // find last node (see method documentation)
+    // With given TEST_VALS, this should always be the node with value 151.00
+    BSTNode* lastNode = getLastLevelsLastNode();
+
+    if (lastNode == targetNode) {
+        if (getRoot() == targetNode) { setRoot(nullptr); }
+        delete lastNode; // mem management - TODO: review destructor
+        return;
+    }
+
+    // Swaps target node and last node, later we will re-heapify and whatnot
+    // Using remove order-of-operations explained in zylabs
+    Currency* tmp = targetNode->data();
+    targetNode->setData(lastNode->data());
+    lastNode->setData(tmp);
+
+    // Remove the last node from the heap & clean up "parent" node ptrs
+    BSTNode* lastPar = getNextParent(lastNode);
+    if (lastPar != nullptr) {
+        if (lastPar->left() == lastNode) { lastPar->setLeft(nullptr); }
+        else if (lastPar->right() == lastNode) { lastPar->setRight(nullptr); }
+    }
+    delete lastNode;
+    minHeapify();
+}
+
+// Helper function to find the parent of a node
+inline BSTNode* MinHeap::getNextParent(BSTNode* node) {
+    if (getRoot() == nullptr || node == nullptr) {
+        return nullptr;
+    }
+
+    std::queue<BSTNode*> q;
+    q.push(getRoot());
+
+    while (!q.empty()) {
+        BSTNode* currentNode = q.front();
+        q.pop();
+
+        if (currentNode->left() == node || currentNode->right() == node) {
+            return currentNode;
+        }
+
+        if (currentNode->left()) q.push(currentNode->left());
+        if (currentNode->right()) q.push(currentNode->right());
+    }
+
+    return nullptr;
 }
 
 
