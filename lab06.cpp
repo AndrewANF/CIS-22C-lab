@@ -36,6 +36,29 @@ int main() {
     std::cout << "\n\nFinal item added, Printing traversals:\n";
     heap.print();
 
+    Dollar* searchTarget = new Dollar(1.0);
+
+    std::cout << "\n\nTesting Search: 1.0";
+    if (heap.search(searchTarget)) {
+      std::cout << "\nSearch target found";
+    }
+    else {
+      std::cout << "\nSearch target Not found";
+    }
+
+    std::cout << "\n";
+    heap.remove();
+    heap.print();
+
+
+    std::cout << "\nTesting Search: 1.0";
+    if (heap.search(searchTarget)) {
+      std::cout << "\nSearch target found";
+    }
+    else {
+      std::cout << "\nSearch target Not found";
+    }
+
 
     std::cout << std::endl;
     //exit program

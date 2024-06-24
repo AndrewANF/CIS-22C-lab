@@ -2,6 +2,7 @@
 //Min heap inharets from BinarySearchTree(BST) and Overrides search insert and delete
 #include "BST.h"
 #include "Currency.h"
+#include <cstddef>
 #include <iterator>
 
 
@@ -18,16 +19,15 @@ class MinHeap: public BST{
   //
   BSTNode* search(Currency* target);
   void insert(Currency* target);
-  void remove(Currency* target);
+  void remove();
   
   int _heapSize = 0;
 
-  BSTNode* getLastLevelsLastNode();
 
  private:
 
 
-  BSTNode* remove(BSTNode* node, Currency* target);
+  //BSTNode* remove(BSTNode* node, Currency* target);
   BSTNode* search(BSTNode* node, Currency* target);
   BSTNode* insert(BSTNode* node, Currency* target);
   void minHeapify(BSTNode* node);
@@ -36,6 +36,15 @@ class MinHeap: public BST{
   //node with < 2 children
   BSTNode* getNextParent();
   BSTNode* getNextParent(BSTNode* node);
+
+  BSTNode* getLastNode();
+  void deleteLastNode(BSTNode* last);
+
+  void deleteRoot();
+
+  void swap(BSTNode* a, BSTNode* b);
+
+  BSTNode* getParent(BSTNode* node);
  
  
 
@@ -207,80 +216,143 @@ inline BSTNode* MinHeap::search(BSTNode* node, Currency* target) {
 	return nullptr; // returns null if node not found
 }
 
-// Using breadth traversal, return "last" node in heap (bottom-most, right-most)
-BSTNode* MinHeap::getLastLevelsLastNode() {
-    if (getRoot() == nullptr) { // nullptr on empty heap
-        return nullptr;
-    }
 
-    // breadth traversal. uses queue class written for previous lab
+
+
+inline void MinHeap::swap(BSTNode* a, BSTNode* b){
+      
+      int wholeTmp = a->data()->wholePart();
+      int fracTmp = a->data()->fractPart();
+      
+      // parentNode = rightChild
+      
+      a->data()->setWholePart(b->data()->wholePart());
+      a->data()->setFractPart(b->data()->fractPart());
+      
+      // rightChild = temp 
+      
+      b->data()->setWholePart(wholeTmp);
+      b->data()->setFractPart(fracTmp);
+
+}
+
+
+inline void MinHeap::deleteRoot() {
+
+  //checks for empty heap
+  if ( getRoot() == nullptr) return;
+
+  BSTNode* last = getLastNode();
+
+  //checks if there is only one node in heap
+  if (last != getRoot()) {
+    swap(getRoot(), last);
+  }
+  deleteLastNode(last);
+
+  if (getRoot() != nullptr) {
+    minHeapify();
+  }
+
+}
+
+
+inline BSTNode* MinHeap::getLastNode() {
+
+if (getRoot() == nullptr) return nullptr;
+
     std::queue<BSTNode*> q;
+    
     q.push(getRoot());
 
-    // this is the node that will be returned
-    BSTNode* target = nullptr;
+    BSTNode* last = nullptr;
 
     while (!q.empty()) {
-        BSTNode* currentNode = q.front();
+
+        last = q.front();
         q.pop();
 
-        target = currentNode;
+        if (last->left()) q.push(last->left());
 
-        if (currentNode->left() != nullptr) {
-            q.push(currentNode->left());
-        }
-        if (currentNode->right() != nullptr) {
-            q.push(currentNode->right());
-        }
+        if (last->right()) q.push(last->right());
+
     }
-
-    return target;
+    return last;
 }
 
 
-// jyn's special sauce remove algorithm (NOT recursive)
-void MinHeap::remove(Currency* target) {
+
+inline void MinHeap::deleteLastNode(BSTNode* last) {
 
 
 
-    // do nothing on empty heap
-    if (getRoot() == nullptr) {
-        return;
+    if (getRoot() == nullptr) return;
+
+    std::queue<BSTNode*> q;
+
+    q.push(getRoot());
+
+    while (!q.empty()) {
+
+        BSTNode* node = q.front();
+        q.pop();
+
+        if (node->left() == last) {
+
+            node->setLeft(nullptr);
+            delete last;
+            return;
+        } else if (node->right() == last) {
+            node->setRight(nullptr);
+            delete last;
+            return;
+        }
+
+        if (node->left()) q.push(node->left());
+        if (node->right()) q.push(node->right());
     }
 
 
-    // Call search to grab targetNode
-    BSTNode* targetNode = search(target);
 
-    if (targetNode == nullptr) {
-        return;
-    }
-
-    // find last node (see method documentation)
-    // With given TEST_VALS, this should always be the node with value 151.00
-    BSTNode* lastNode = getLastLevelsLastNode();
-
-    if (lastNode == targetNode) {
-        if (getRoot() == targetNode) { setRoot(nullptr); }
-        delete lastNode; // mem management - TODO: review destructor
-        return;
-    }
-
-    // Swaps target node and last node, later we will re-heapify and whatnot
-    // Using remove order-of-operations explained in zylabs
-    Currency* tmp = targetNode->data();
-    targetNode->setData(lastNode->data());
-    lastNode->setData(tmp);
-
-    // Remove the last node from the heap & clean up "parent" node ptrs
-    BSTNode* lastPar = getNextParent(lastNode);
-    if (lastPar != nullptr) {
-        if (lastPar->left() == lastNode) { lastPar->setLeft(nullptr); }
-        else if (lastPar->right() == lastNode) { lastPar->setRight(nullptr); }
-    }
-    delete lastNode;
-    minHeapify();
 }
+
+
+
+
+inline BSTNode* MinHeap::getParent(BSTNode* node) {
+
+    if (!getRoot() || getRoot() == node) return nullptr;
+
+    std::queue<BSTNode*> q;
+
+    q.push(getRoot());
+    while (!q.empty()) {
+        BSTNode* parent = q.front();
+        q.pop();
+        if (parent->left() == node || parent->right() == node) {
+            return parent;
+        }
+        if (parent->left()) q.push(parent->left());
+        if (parent->right()) q.push(parent->right());
+    }
+    return nullptr;
+}
+
+
+
+
+
+inline void MinHeap::remove() {
+
+  deleteRoot();
+
+}
+
+
+
+
+
+
 
 // Helper function to find the parent of a node
 inline BSTNode* MinHeap::getNextParent(BSTNode* node) {
