@@ -205,6 +205,8 @@ inline BSTNode * MinHeap::search(BSTNode * node, Currency * target) {
   return nullptr; // returns null if node not found
 }
 
+//swaps the data values of whole and frac
+//from the two values given
 inline void MinHeap::swap(BSTNode * a, BSTNode * b) {
 
   int wholeTmp = a -> data() -> wholePart();
@@ -222,6 +224,8 @@ inline void MinHeap::swap(BSTNode * a, BSTNode * b) {
 
 }
 
+//Deletes the root or in the case
+//of minHeap the lowest value item
 inline void MinHeap::deleteRoot() {
 
   //checks for empty heap
@@ -241,6 +245,8 @@ inline void MinHeap::deleteRoot() {
 
 }
 
+//returns the last node in the 
+//heap
 inline BSTNode * MinHeap::getLastNode() {
 
   if (getRoot() == nullptr) return nullptr;
@@ -264,6 +270,8 @@ inline BSTNode * MinHeap::getLastNode() {
   return last;
 }
 
+//deletes the last node in the 
+//heap
 inline void MinHeap::deleteLastNode(BSTNode * last) {
 
   if (getRoot() == nullptr) return;
@@ -294,6 +302,8 @@ inline void MinHeap::deleteLastNode(BSTNode * last) {
 
 }
 
+//returns the parents of the node 
+//passed
 inline BSTNode * MinHeap::getParent(BSTNode * node) {
 
   if (!getRoot() || getRoot() == node) return nullptr;
@@ -313,6 +323,8 @@ inline BSTNode * MinHeap::getParent(BSTNode * node) {
   return nullptr;
 }
 
+//public faceing function that calls delete root
+// MinHeap should only ever delete the root node
 inline void MinHeap::remove() {
 
   deleteRoot();

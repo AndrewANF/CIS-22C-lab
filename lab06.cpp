@@ -1,13 +1,12 @@
 // Lab 6
 // lab6.cpp
 // Linhnam Le & Andrew Nunez Forsberg
-// This assignment demonstrates a Hashtable
+// This assignment demonstrates a Min Heap
+// 06/23/24
 
 #include "Dollar.h"
 
 #include <iostream>
-
-#include <iterator>
 
 #include "MinHeap.h"
 
@@ -54,6 +53,11 @@ int main() {
   std::cout << "\n\nFinal item added, Printing traversals:\n";
   heap.print();
 
+// Test Search and delete methods
+
+
+/*
+
   Dollar * searchTarget = new Dollar(1.0);
 
   std::cout << "\n\nTesting Search: 1.0";
@@ -74,7 +78,12 @@ int main() {
     std::cout << "\nSearch target Not found";
   }
 
+*/
+
+
+
   std::cout << std::endl;
+
   //exit program
   return 0;
 }
